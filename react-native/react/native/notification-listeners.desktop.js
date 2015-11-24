@@ -19,8 +19,8 @@ export default {
 
     const state = {
       [enums.kbfs.FSStatusCode.start]: '',
-      [enums.kbfs.FSStatusCode.finish]: 'Finished',
-      [enums.kbfs.FSStatusCode.error]: 'Errored'
+      [enums.kbfs.FSStatusCode.finish]: 'finished',
+      [enums.kbfs.FSStatusCode.error]: 'errored'
     }[notification.statusCode]
 
     const pubPriv = notification.publicTopLevelFolder ? '[Public]' : '[Private]'
