@@ -1,5 +1,3 @@
-'use strict'
-
 const os = require('os')
 const webpack = require('webpack')
 const cfg = require('./webpack.config.production.js')
@@ -21,8 +19,8 @@ del.sync('build')
 
 fs.copySync('./Icon.png', 'build/desktop/Icon.png')
 fs.copySync('./Icon@2x.png', 'build/desktop/Icon@2x.png')
-fs.copySync('../react-native/react/native', 'build/react-native/react/native', {filter: f => f.endsWith('.html')})
-fs.copySync('../react-native/react/images', 'build/react-native/react/images')
+fs.copySync('../react/native', 'build/react/native', {filter: f => f.endsWith('.html')})
+fs.copySync('../react/images', 'build/react/images')
 fs.copySync('./node_modules/font-awesome/css/font-awesome.min.css', 'build/desktop/node_modules/font-awesome/css/font-awesome.min.css')
 fs.copySync('./node_modules/font-awesome/fonts/fontawesome-webfont.woff2', 'build/desktop/node_modules/font-awesome/fonts/fontawesome-webfont.woff2')
 fs.copySync('./node_modules/nslog/package.json', 'build/desktop/node_modules/nslog/package.json')

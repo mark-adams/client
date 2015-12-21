@@ -1,20 +1,20 @@
 /* @flow */
 
-import React, {Component} from '../../react-native/react/base-react'
+import React, {Component} from '../../react/base-react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
-import configureStore from '../../react-native/react/store/configure-store'
-import Nav from '../../react-native/react/nav'
+import configureStore from '../../react/store/configure-store'
+import Nav from '../../react/nav'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import {isDev} from '../../react-native/react/constants/platform'
-import {reduxDevToolsSelect} from '../../react-native/react/local-debug.desktop'
+import {isDev} from '../../react/constants/platform'
+import {reduxDevToolsSelect} from '../../react/local-debug.desktop'
 
-import ListenForNotifications from '../../react-native/react/native/notifications'
-import ListenLogUi from '../../react-native/react/native/listen-log-ui'
+import ListenForNotifications from '../../react/native/notifications'
+import ListenLogUi from '../../react/native/listen-log-ui'
 
 // For Remote Components
 import {ipcRenderer} from 'electron'
-import RemoteManager from '../../react-native/react/native/remote-manager'
+import RemoteManager from '../../react/native/remote-manager'
 import {ipcMain} from 'remote'
 import consoleHack from '../app/console-hack'
 

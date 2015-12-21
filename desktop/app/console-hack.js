@@ -1,5 +1,5 @@
 import util from 'util'
-import {isDev} from '../../react-native/react/local-debug'
+import {isDev} from '../../react/local-debug'
 
 export default () => {
   if (!isDev) {

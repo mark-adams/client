@@ -3,7 +3,7 @@
 
 import React, {Component} from '../base-react'
 import {FlatButton} from 'material-ui'
-import resolveAssets from '../../../desktop/resolve-assets'
+import resolveAssets from '../../desktop/resolve-assets'
 
 import {intersperseFn} from '../util/arrays'
 import {parseFolderNameToUsers, canonicalizeUsernames} from '../util/kbfs'

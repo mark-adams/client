@@ -1,8 +1,8 @@
 import {remote} from 'electron'
 import React from 'react'
-import Menubar from '../../react-native/react/native/remote-menubar'
+import Menubar from '../../react/native/remote-menubar'
 import reactDOM from 'react-dom'
-import {showMainWindow} from '../../react-native/react/local-debug.desktop'
+import {showMainWindow} from '../../react/local-debug.desktop'
 
 import consoleHack from '../app/console-hack'
 

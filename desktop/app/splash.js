@@ -1,6 +1,6 @@
 // Checks to see if we've launched before (we touch started.txt). If not, write the file and open a browser
-import {socketRoot} from '../../react-native/react/constants/platform.native.desktop'
-import {helpURL} from '../../react-native/react/constants/urls'
+import {socketRoot} from '../../react/constants/platform.native.desktop'
+import {helpURL} from '../../react/constants/urls'
 import path from 'path'
 
 const filePath = path.join(socketRoot, 'started.txt')
@@ -12,8 +12,7 @@ export default () => {
     if (err) {
       try {
         fs.writeFileSync(filePath, 'This file gets created on first run of the app')
-      }
-      catch (e) {
+      } catch (e) {
         console.error(`Couldn't mark splash screen shown: ${e}`)
         // if we cant' write this file, let's not show the splash, maybe something weird is going on
         return

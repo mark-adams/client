@@ -5,7 +5,7 @@ import remote from 'remote'
 import {ipcRenderer} from 'electron'
 import RemoteStore from './remote-store'
 import commonStyles from '../styles/common'
-import consoleHack from '../../../desktop/app/console-hack'
+import consoleHack from '../../desktop/app/console-hack'
 
 consoleHack()
 

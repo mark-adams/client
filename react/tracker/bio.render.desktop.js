@@ -6,7 +6,7 @@ import commonStyles, {colors} from '../styles/common'
 import type {Styled} from '../styles/common'
 
 import path from 'path'
-import resolveAssets from '../../../desktop/resolve-assets'
+import resolveAssets from '../../desktop/resolve-assets'
 
 import type {BioProps} from './bio.render.types'
 

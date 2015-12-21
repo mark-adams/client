@@ -1,8 +1,8 @@
 import React, {Component} from '../base-react'
 import {remote, ipcRenderer} from 'electron'
-import resolveAssets from '../../../desktop/resolve-assets'
-import menuHelper from '../../../desktop/app/menu-helper'
-import hotPath from '../../../desktop/hot-path'
+import resolveAssets from '../../desktop/resolve-assets'
+import menuHelper from '../../desktop/app/menu-helper'
+import hotPath from '../../desktop/hot-path'
 
 const {BrowserWindow} = remote
 

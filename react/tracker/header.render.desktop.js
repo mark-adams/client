@@ -4,7 +4,7 @@ import React, {Component} from '../base-react'
 import path from 'path'
 import type {Styled} from '../styles/common'
 import Header from '../common-adapters/header'
-import resolveAssets from '../../../desktop/resolve-assets'
+import resolveAssets from '../../desktop/resolve-assets'
 
 import type {HeaderProps} from './header.render.types'
 

@@ -4,11 +4,11 @@ import Window from './window'
 import splash from './splash'
 import installer from './installer'
 import {app} from 'electron'
-import {showDevTools} from '../../react-native/react/local-debug.desktop'
-import {helpURL} from '../../react-native/react/constants/urls'
+import {showDevTools} from '../../react/local-debug.desktop'
+import {helpURL} from '../../react/constants/urls'
 import resolveAssets from '../resolve-assets'
 import hotPath from '../hot-path'
-import ListenLogUi from '../../react-native/react/native/listen-log-ui'
+import ListenLogUi from '../../react/native/listen-log-ui'
 import menuHelper from './menu-helper'
 import consoleHack from './console-hack'
 
@@ -29,8 +29,8 @@ if (process.platform === 'darwin') {
   menuHelper()
 }
 
-const menubarIconPath = resolveAssets('../react-native/react/images/menubarIcon/topBar_iconTemplate.png')
-const menubarLoadingIconPath = resolveAssets('../react-native/react/images/menubarIcon/topBar_icon_loadingTemplate.png')
+const menubarIconPath = resolveAssets('../react/images/menubarIcon/topBar_iconTemplate.png')
+const menubarLoadingIconPath = resolveAssets('../react/images/menubarIcon/topBar_icon_loadingTemplate.png')
 
 const mb = menubar({
   index: `file://${resolveAssets('./renderer/launcher.html')}?src=${hotPath('launcher.bundle.js')}`,
