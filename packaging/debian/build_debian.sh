@@ -59,12 +59,14 @@ build_one_architecture() {
   git clone git://github.com/keybase/client
   backto=`pwd`
   echo $backto
-  cd client/react-native
+  cd client
+  git checkout cjb/DESKTOP-114-linux-electron
+  cd react-native
   npm i
   cd ../desktop
   npm i
 
-  node ../../../../desktop/package.js --platform linux --arch $electron_arch
+  node package.js --platform linux --arch $electron_arch
   cd $backto
   cp -r "client/desktop/release/linux-${electron_arch}/*" "$dest/build/opt/keybase"
 
