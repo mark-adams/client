@@ -68,7 +68,7 @@ build_one_architecture() {
 
   node package.js --platform linux --arch $electron_arch
   cd $backto
-  cp -r "client/desktop/release/linux-${electron_arch}/*" "$dest/build/opt/keybase"
+  cp -r client/desktop/release/linux-${electron_arch}/Keybase-linux-${electron_arch}/* "$dest/build/opt/keybase"
 
   fakeroot dpkg-deb --build "$dest/build" "$dest/$binary_name.deb"
 
