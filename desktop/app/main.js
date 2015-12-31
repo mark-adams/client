@@ -36,16 +36,16 @@ const mb = menubar({
   index: `file://${resolveAssets('./renderer/launcher.html')}?src=${hotPath('launcher.bundle.js')}`,
   width: 320,
   preloadWindow: true,
-  icon: menubarIconPath,
+  //icon: menubarIconPath,
   showDockIcon: true // This causes menubar to not touch dock icon, yeah it's weird
 })
 
 ipc.on('showTrayLoading', () => {
-  mb.tray.setImage(menubarLoadingIconPath)
+  //mb.tray.setImage(menubarLoadingIconPath)
 })
 
 ipc.on('showTrayNormal', () => {
-  mb.tray.setImage(menubarIconPath)
+  //mb.tray.setImage(menubarIconPath)
 })
 
 mb.on('ready', () => {
