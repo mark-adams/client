@@ -33,11 +33,11 @@ const menubarIconPath = resolveAssets('../react-native/react/images/menubarIcon/
 const menubarLoadingIconPath = resolveAssets('../react-native/react/images/menubarIcon/topbar_icon_loadingTemplate.png')
 
 const mb = menubar({
-  index: `file://${resolveAssets('./renderer/launcher.html')}?src=${hotPath('launcher.bundle.js')}`,
-  width: 320,
-  preloadWindow: true,
+  //index: `file://${resolveAssets('./renderer/launcher.html')}?src=${hotPath('launcher.bundle.js')}`,
+  //width: 320,
+  //preloadWindow: true,
   //icon: menubarIconPath,
-  showDockIcon: true // This causes menubar to not touch dock icon, yeah it's weird
+  //showDockIcon: true // This causes menubar to not touch dock icon, yeah it's weird
 })
 
 ipc.on('showTrayLoading', () => {
