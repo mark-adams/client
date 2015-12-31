@@ -1,4 +1,4 @@
-import menubar from 'menubar'
+//import menubar from 'menubar'
 import {BrowserWindow, ipcMain as ipc, shell} from 'electron'
 import Window from './window'
 import splash from './splash'
@@ -31,7 +31,7 @@ if (process.platform === 'darwin') {
 
 const menubarIconPath = resolveAssets('../react-native/react/images/menubarIcon/topbar_iconTemplate.png')
 const menubarLoadingIconPath = resolveAssets('../react-native/react/images/menubarIcon/topbar_icon_loadingTemplate.png')
-
+/*
 const mb = menubar({
   index: `file://${resolveAssets('./renderer/launcher.html')}?src=${hotPath('launcher.bundle.js')}`,
   width: 320,
@@ -39,7 +39,7 @@ const mb = menubar({
   //icon: menubarIconPath,
   showDockIcon: true // This causes menubar to not touch dock icon, yeah it's weird
 })
-
+*/
 ipc.on('showTrayLoading', () => {
   //mb.tray.setImage(menubarLoadingIconPath)
 })
@@ -47,7 +47,7 @@ ipc.on('showTrayLoading', () => {
 ipc.on('showTrayNormal', () => {
   //mb.tray.setImage(menubarIconPath)
 })
-
+/*
 mb.on('ready', () => {
   // prevent the menubar's window from dying when we quit
   mb.window.on('close', event => {
@@ -56,7 +56,7 @@ mb.on('ready', () => {
     event.preventDefault()
   })
 })
-
+*/
 // In case the subscribe store comes before the remote store is ready
 ipc.on('subscribeStore', event => {
   ipc.on('remoteStoreReady', () => {
@@ -66,11 +66,13 @@ ipc.on('subscribeStore', event => {
 
 // Work around an OS X bug that leaves a gap in the status bar if you exit
 // without removing your status bar icon.
+/*
 if (process.platform === 'darwin') {
   mb.app.on('before-quit', () => {
     mb.tray && mb.tray.destroy()
   })
 }
+*/
 
 const mainWindow = new Window(
   resolveAssets(`./renderer/index.html?src=${hotPath('index.bundle.js')}`), {
@@ -81,7 +83,7 @@ const mainWindow = new Window(
 )
 
 ipc.on('closeMenubar', () => {
-  mb.hideWindow()
+  //mb.hideWindow()
 })
 
 ipc.on('showMain', () => {
