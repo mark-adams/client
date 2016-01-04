@@ -32,22 +32,27 @@ if (process.platform === 'darwin') {
 const menubarIconPath = resolveAssets('../react-native/react/images/menubarIcon/topbar_iconTemplate.png')
 const menubarLoadingIconPath = resolveAssets('../react-native/react/images/menubarIcon/topbar_icon_loadingTemplate.png')
 
+console.log("menubarIconPath")
+console.log(menubarIconPath)
+console.log("menubarLoadingIconPath")
+console.log(menubarLoadingIconPath)
+
 const mb = menubar({
-  //index: `file://${resolveAssets('./renderer/launcher.html')}?src=${hotPath('launcher.bundle.js')}`,
-  //width: 320,
-  //preloadWindow: true,
-  //icon: menubarIconPath,
-  //showDockIcon: true // This causes menubar to not touch dock icon, yeah it's weird
+  index: `file://${resolveAssets('./renderer/launcher.html')}?src=${hotPath('launcher.bundle.js')}`,
+  width: 320,
+  preloadWindow: true,
+  icon: menubarIconPath,
+  showDockIcon: true // This causes menubar to not touch dock icon, yeah it's weird
 })
 
 ipc.on('showTrayLoading', () => {
-  //mb.tray.setImage(menubarLoadingIconPath)
+  mb.tray.setImage(menubarLoadingIconPath)
 })
 
 ipc.on('showTrayNormal', () => {
-  //mb.tray.setImage(menubarIconPath)
+  mb.tray.setImage(menubarIconPath)
 })
-/*
+
 mb.on('ready', () => {
   // prevent the menubar's window from dying when we quit
   mb.window.on('close', event => {
@@ -56,7 +61,7 @@ mb.on('ready', () => {
     event.preventDefault()
   })
 })
-*/
+
 // In case the subscribe store comes before the remote store is ready
 ipc.on('subscribeStore', event => {
   ipc.on('remoteStoreReady', () => {
@@ -66,13 +71,12 @@ ipc.on('subscribeStore', event => {
 
 // Work around an OS X bug that leaves a gap in the status bar if you exit
 // without removing your status bar icon.
-/*
+
 if (process.platform === 'darwin') {
   mb.app.on('before-quit', () => {
     mb.tray && mb.tray.destroy()
   })
 }
-*/
 
 const mainWindow = new Window(
   resolveAssets(`./renderer/index.html?src=${hotPath('index.bundle.js')}`), {
@@ -83,7 +87,7 @@ const mainWindow = new Window(
 )
 
 ipc.on('closeMenubar', () => {
-  //mb.hideWindow()
+  mb.hideWindow()
 })
 
 ipc.on('showMain', () => {
@@ -148,3 +152,7 @@ ipc.on('console.error', (event, args) => {
 
 // Handle logUi.log
 ListenLogUi()
+
+setInterval(function () {
+  console.log(BrowserWindow.getAllWindows().length)
+}, 1000)

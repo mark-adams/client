@@ -97,7 +97,12 @@ class RemoteManager extends Component {
               resizable: false
             }}
             waitForState
-            onRemoteClose={() => this.props.onCloseFromHeader(username)}
+            onRemoteClose={() => {
+              console.log('in onRemoteClose')
+              console.log(this.props)
+              console.log(this.props.onCloseFromHeader)
+              this.props.onCloseFromHeader(username)}
+            }
             component='tracker'
             username={username}
             substore='tracker'

@@ -39,3 +39,4 @@ type showUpdatePromptPayload = {
 type UpdateError = void
 
 export const snoozeTimeSecs = 60 * 60 * 24
+export const timeoutTimeSecs = 60 * 30

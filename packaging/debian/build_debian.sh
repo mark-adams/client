@@ -7,7 +7,7 @@
 # Usage:
 #   ./build_debian.sh (production|staging|devel) [build_dir]
 
-set -e -u -o pipefail
+set -x -e -u -o pipefail
 
 here="$(dirname "$BASH_SOURCE")"
 
@@ -26,6 +26,21 @@ fi
 build_root="${2:-$(mktemp -d)}"
 
 echo "Building $mode mode in $build_root"
+
+build_electron() {
+  echo "building Electron client"
+  backto=`pwd`
+  rm -rf "client"
+  git clone git://github.com/keybase/client
+  echo $backto
+  cd client
+  git checkout cjb/DESKTOP-114-linux-electron
+  cd react-native
+  npm i
+  cd ../desktop
+  npm i
+  cd $backto
+}
 
 build_one_architecture() {
   echo "building Go client for $GOARCH"
@@ -53,38 +68,31 @@ build_one_architecture() {
     > "$dest/build/DEBIAN/control"
   cp "$here/postinst" "$dest/build/DEBIAN/"
 
-  echo "Building Electron client for $electron_arch"
   # Now the Electron build.
-  rm -rf "client"
-  git clone git://github.com/keybase/client
+  echo "Building Electron client for $electron_arch"
   backto=`pwd`
-  echo $backto
-  cd client
-  git checkout cjb/DESKTOP-114-linux-electron
-  cd react-native
-  npm i
-  cd ../desktop
-  npm i
-
+  cd client/desktop
   node package.js --platform linux --arch $electron_arch
-  cd $backto
-  cp -r client/desktop/release/linux-${electron_arch}/Keybase-linux-${electron_arch}/* "$dest/build/opt/keybase"
+  cp -r release/linux-${electron_arch}/Keybase-linux-${electron_arch}/* "$dest/build/opt/keybase"
 
   fakeroot dpkg-deb --build "$dest/build" "$dest/$binary_name.deb"
 
   # Write the version number to a file for the caller's convenience.
   echo -n "$version" > "$dest/VERSION"
+  cd $backto
 }
 
 # Note that Go names the x86 architecture differently than Debian does, which
 # is why we need these two variables.
-export GOARCH=386
-export debian_arch=i386
-export electron_arch=ia32
 
-build_one_architecture
+build_electron
 
 export GOARCH=amd64
 export debian_arch=amd64
 export electron_arch=x64
+build_one_architecture
+
+export GOARCH=386
+export debian_arch=i386
+export electron_arch=ia32
 build_one_architecture
