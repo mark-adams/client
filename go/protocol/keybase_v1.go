@@ -2924,6 +2924,11 @@ type GetKeyArg struct {
 	LogTags   map[string]string `codec:"logTags" json:"logTags"`
 }
 
+type DeleteKeyArg struct {
+	KeyHalfID []byte            `codec:"keyHalfID" json:"keyHalfID"`
+	LogTags   map[string]string `codec:"logTags" json:"logTags"`
+}
+
 type TruncateLockArg struct {
 	FolderID string `codec:"folderID" json:"folderID"`
 }
@@ -2952,6 +2957,7 @@ type MetadataInterface interface {
 	PruneBranch(context.Context, PruneBranchArg) error
 	PutKeys(context.Context, PutKeysArg) error
 	GetKey(context.Context, GetKeyArg) ([]byte, error)
+	DeleteKey(context.Context, DeleteKeyArg) error
 	TruncateLock(context.Context, string) (bool, error)
 	TruncateUnlock(context.Context, string) (bool, error)
 	GetFolderHandle(context.Context, GetFolderHandleArg) ([]byte, error)
@@ -3075,6 +3081,22 @@ func MetadataProtocol(i MetadataInterface) rpc.Protocol {
 				},
 				MethodType: rpc.MethodCall,
 			},
+			"deleteKey": {
+				MakeArg: func() interface{} {
+					ret := make([]DeleteKeyArg, 1)
+					return &ret
+				},
+				Handler: func(ctx context.Context, args interface{}) (ret interface{}, err error) {
+					typedArgs, ok := args.(*[]DeleteKeyArg)
+					if !ok {
+						err = rpc.NewTypeError((*[]DeleteKeyArg)(nil), args)
+						return
+					}
+					err = i.DeleteKey(ctx, (*typedArgs)[0])
+					return
+				},
+				MethodType: rpc.MethodCall,
+			},
 			"truncateLock": {
 				MakeArg: func() interface{} {
 					ret := make([]TruncateLockArg, 1)
@@ -3191,6 +3213,11 @@ func (c MetadataClient) PutKeys(ctx context.Context, __arg PutKeysArg) (err erro
 
 func (c MetadataClient) GetKey(ctx context.Context, __arg GetKeyArg) (res []byte, err error) {
 	err = c.Cli.Call(ctx, "keybase.1.metadata.getKey", []interface{}{__arg}, &res)
+	return
+}
+
+func (c MetadataClient) DeleteKey(ctx context.Context, __arg DeleteKeyArg) (err error) {
+	err = c.Cli.Call(ctx, "keybase.1.metadata.deleteKey", []interface{}{__arg}, nil)
 	return
 }
 
