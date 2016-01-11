@@ -27,7 +27,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/test/go/src/github.com/keybase/client/packaging/prerelease/build_app_darwin.sh</string>
+        <string>/Users/test/go/src/github.com/keybase/client/packaging/prerelease/build_app.sh</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>
