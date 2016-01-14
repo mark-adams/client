@@ -528,6 +528,12 @@ func (s *LoginState) tryPassphrasePromptLogin(lctx LoginContext, username string
 	return
 }
 
+func (s *LoginState) cancelLogin(secretUI SecretUI) (err error) {
+	s.G().Log.Debug("LoginState.cancelLogin")
+	err = secretUI.Cancel()
+	return
+}
+
 func (s *LoginState) getEmailOrUsername(lctx LoginContext, username *string, loginUI LoginUI) (err error) {
 	if len(*username) != 0 {
 		return
@@ -713,7 +719,20 @@ func (s *LoginState) loginWithPromptHelper(lctx LoginContext, username string, l
 			return
 		}
 	}
-	return s.tryPassphrasePromptLogin(lctx, username, secretUI)
+
+	// Don't let the login promt live more than 30 seconds
+	passphraseChan := make(chan error)
+	go func() {
+		passphraseChan <- s.tryPassphrasePromptLogin(lctx, username, secretUI)
+	}()
+
+	select {
+	case res := <-passphraseChan:
+		return res
+	case <-time.After(time.Second * 30):
+		s.cancelLogin(secretUI)
+		return PassphraseError{"UI timeout"}
+	}
 }
 
 // loginHandle creates a loginReq from a loginHandler and puts it
