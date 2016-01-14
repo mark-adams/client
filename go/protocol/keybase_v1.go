@@ -4959,8 +4959,13 @@ type GetPassphraseArg struct {
 	Terminal  *SecretEntryArg `codec:"terminal,omitempty" json:"terminal,omitempty"`
 }
 
+type CancelArg struct {
+	SessionID int `codec:"sessionID" json:"sessionID"`
+}
+
 type SecretUiInterface interface {
 	GetPassphrase(context.Context, GetPassphraseArg) (GetPassphraseRes, error)
+	Cancel(context.Context, int) error
 }
 
 func SecretUiProtocol(i SecretUiInterface) rpc.Protocol {
@@ -4983,6 +4988,22 @@ func SecretUiProtocol(i SecretUiInterface) rpc.Protocol {
 				},
 				MethodType: rpc.MethodCall,
 			},
+			"Cancel": {
+				MakeArg: func() interface{} {
+					ret := make([]CancelArg, 1)
+					return &ret
+				},
+				Handler: func(ctx context.Context, args interface{}) (ret interface{}, err error) {
+					typedArgs, ok := args.(*[]CancelArg)
+					if !ok {
+						err = rpc.NewTypeError((*[]CancelArg)(nil), args)
+						return
+					}
+					err = i.Cancel(ctx, (*typedArgs)[0].SessionID)
+					return
+				},
+				MethodType: rpc.MethodCall,
+			},
 		},
 	}
 }
@@ -4993,6 +5014,12 @@ type SecretUiClient struct {
 
 func (c SecretUiClient) GetPassphrase(ctx context.Context, __arg GetPassphraseArg) (res GetPassphraseRes, err error) {
 	err = c.Cli.Call(ctx, "keybase.1.secretUi.getPassphrase", []interface{}{__arg}, &res)
+	return
+}
+
+func (c SecretUiClient) Cancel(ctx context.Context, sessionID int) (err error) {
+	__arg := CancelArg{SessionID: sessionID}
+	err = c.Cli.Call(ctx, "keybase.1.secretUi.Cancel", []interface{}{__arg}, nil)
 	return
 }
 
